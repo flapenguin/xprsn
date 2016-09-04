@@ -1,5 +1,5 @@
 /**
- * Lexer with lookahead support.
+ * Lexer with lookahead support. Tokens can be of any type.
  */
 class Lexer {
   /**

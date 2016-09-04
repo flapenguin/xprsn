@@ -1,11 +1,11 @@
 const assert = require('assert');
 const Lexer = require('./lexer');
 
-describe('Lexer', () => {
-  function tok(type, value) {
-    return { type: type, value: value };
-  }
+function tok(type) {
+  return { type: type };
+}
 
+describe('Lexer', () => {
   const eof = tok('EOF');
   const tokens = [tok(0), tok(1), tok(2), tok(3)];
 
