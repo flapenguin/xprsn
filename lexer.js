@@ -3,7 +3,7 @@
  */
 class Lexer {
   /**
-   * @param tokens {function*|Token[]} - generator of tokens
+   * @param tokens {function|Token[]} - generator of tokens
    * @param eof {Token}
    */
   constructor(tokens, eof) {
@@ -27,6 +27,7 @@ class Lexer {
 
   /**
    * Peeks next token in the stream withotu consuming it.
+   * @param n {number} 0-based index of token after current one to peek
    * @return {Token}
    */
   peek(n) {
@@ -42,6 +43,7 @@ class Lexer {
 
   /**
    * Skips specified number of tokens.
+   * @param n {number} how much tokens to skip
    */
   skip(n) {
     n = n || 1;
@@ -55,6 +57,12 @@ class Lexer {
     }
   }
 
+  /**
+   * Consumes tokens until predicate is satisfied.
+   * @param predicate {function}
+   * @param include {boolean} whether to include token which satisfied predicate
+   * @return {Token[]}
+   */
   consumeUntil(predicate, include) {
     const toks = [];
     while (true) {
