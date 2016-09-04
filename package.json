@@ -4,8 +4,12 @@
   "description": "Customizable expression parser.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha **/*.spec.js",
+    "test:watch": "mocha --watch **/*.spec.js"
   },
   "author": "Andrey Roenko <flapenguin@outlook.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "mocha": "^3.0.2"
+  }
 }
