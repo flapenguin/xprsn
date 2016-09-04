@@ -4,18 +4,37 @@
 class Parser {
   constructor(lexer, rules) {
     this.lexer = lexer;
-    this.rules = rules;
+    this.prefix = rules.prefix || {};
+    this.postfix = rules.postfix || {};
   }
 
-  parse() {
-    const tok = this.lexer.consume();
+  /**
+   * Parses expression as part of expression with higher precedence (default 0).
+   */
+  parse(precedence) {
+    precedence = precedence || 0;
 
-    const rule = this.rules.find(x => x.tokenType === tok.type);
-    if (!rule) {
+    const tok = this.lexer.consume();
+    const prefixRule = this.prefix[tok.type];
+    if (!prefixRule) {
       throw new Error(`Parslet is not found for token type ${tok.type}`);
     }
 
-    return rule.parse(tok, this);
+    let expr = prefixRule.parse(tok, this, prefixRule.precedence);
+
+    while (true) {
+      const tok = this.lexer.peek();
+      const rule = this.postfix[tok.type];
+
+      if (!rule || precedence >= rule.precedence) {
+        break;
+      }
+
+      this.lexer.skip();
+      expr = rule.parse(tok, expr, this, rule.precedence);
+    }
+
+    return expr;
   }
 }
 
