@@ -82,4 +82,20 @@ describe('Lexer', () => {
     assert.strictEqual(consumed2, tokens[2]);
     assert.strictEqual(rounds, 3);
   });
+
+  it('should skip until predicate is satisfied inclusively', () => {
+    const lexer = new Lexer(tokens, eof);
+
+    const toks = lexer.consumeUntil(tok => tok.type == 2);
+
+    assert.deepStrictEqual(toks, tokens.slice(0, 2));
+  });
+
+  it('should skip until predicate is satisfied exclusively', () => {
+    const lexer = new Lexer(tokens, eof);
+
+    const toks = lexer.consumeUntil(tok => tok.type == 2, true);
+
+    assert.deepStrictEqual(toks, tokens.slice(0, 3));
+  });
 });

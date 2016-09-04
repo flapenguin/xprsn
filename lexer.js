@@ -55,6 +55,26 @@ class Lexer {
     }
   }
 
+  consumeUntil(predicate, include) {
+    const toks = [];
+    while (true) {
+      const tok = this.peek();
+      if (predicate(tok)) {
+        if (include) {
+          this.skip();
+          toks.push(tok);
+        }
+
+        break;
+      }
+
+      this.skip();
+      toks.push(tok);
+    }
+
+    return toks;
+  }
+
   /**
    * Consumes next token in the stream.
    * @return {Token}

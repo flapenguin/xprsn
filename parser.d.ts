@@ -32,6 +32,8 @@ interface ParserRules<TokenType> {
 
 declare class Parser<TokenType> {
   constructor(lexer: Lexer<Token<TokenType>>, rules: ParserRules<TokenType>);
+
+  lexer: Lexer<TokenType>;
 }
 
 export = Parser;
